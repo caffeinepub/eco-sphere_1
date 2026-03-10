@@ -1,0 +1,231 @@
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/assets/fonts/Outfit-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0.98 0 0;
+    --foreground: 0.12 0.02 200;
+    --card: 0.99 0 0;
+    --card-foreground: 0.12 0.02 200;
+    --popover: 0.99 0 0;
+    --popover-foreground: 0.12 0.02 200;
+    --primary: 0.52 0.18 148;
+    --primary-foreground: 0.99 0 0;
+    --secondary: 0.92 0.04 148;
+    --secondary-foreground: 0.2 0.05 148;
+    --muted: 0.94 0.02 148;
+    --muted-foreground: 0.48 0.05 148;
+    --accent: 0.75 0.22 148;
+    --accent-foreground: 0.1 0.03 148;
+    --destructive: 0.55 0.22 27;
+    --destructive-foreground: 0.99 0 0;
+    --border: 0.88 0.03 148;
+    --input: 0.88 0.03 148;
+    --ring: 0.52 0.18 148;
+    --radius: 1rem;
+    --chart-1: 0.52 0.18 148;
+    --chart-2: 0.65 0.2 165;
+    --chart-3: 0.72 0.18 140;
+    --chart-4: 0.45 0.15 200;
+    --chart-5: 0.6 0.22 120;
+    --sidebar: 0.13 0.04 200;
+    --sidebar-foreground: 0.92 0.03 148;
+    --sidebar-primary: 0.52 0.18 148;
+    --sidebar-primary-foreground: 0.99 0 0;
+    --sidebar-accent: 0.2 0.05 200;
+    --sidebar-accent-foreground: 0.92 0.03 148;
+    --sidebar-border: 0.25 0.05 200;
+    --sidebar-ring: 0.52 0.18 148;
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Outfit", sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+  }
+}
+
+/* ── Keyframes ─────────────────────────────────────────── */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes floatLeaf {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-30px) rotate(15deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.52 0.18 148 / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 8px oklch(0.52 0.18 148 / 0.2);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* ── Hero animations ───────────────────────────────────── */
+.hero-title {
+  animation: fadeSlideUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-tagline {
+  animation: fadeSlideUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+.hero-cta {
+  animation: fadeSlideUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+.hero-leaf {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50% 0 50% 0;
+  background: oklch(0.65 0.22 148 / 0.5);
+  animation: floatLeaf var(--duration, 5s) ease-in-out var(--delay, 0s) infinite;
+}
+
+/* ── Scroll-reveal ─────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Card hover ────────────────────────────────────────── */
+.eco-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.eco-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px oklch(0.2 0.06 148 / 0.2);
+}
+
+/* ── Navbar scroll effect ──────────────────────────────── */
+.navbar-solid {
+  background: oklch(0.12 0.04 200 / 0.97) !important;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 2px 20px oklch(0 0 0 / 0.3);
+}
+
+/* ── Map zone hover ────────────────────────────────────── */
+.map-zone {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s
+    ease;
+  cursor: pointer;
+}
+.map-zone:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 30px oklch(0.6 0.22 148 / 0.5);
+}
+.map-zone.active {
+  border-color: oklch(0.65 0.22 148) !important;
+  box-shadow: 0 0 40px oklch(0.6 0.22 148 / 0.6);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ── Info panel transition ─────────────────────────────── */
+.info-panel {
+  animation: fadeSlideUp 0.4s ease both;
+}
+
+/* ── Stats shimmer text ────────────────────────────────── */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    oklch(0.65 0.22 148),
+    oklch(0.85 0.2 148),
+    oklch(0.65 0.22 148)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.12 0.04 200);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.4 0.12 148);
+  border-radius: 3px;
+}
