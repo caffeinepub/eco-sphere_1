@@ -14,7 +14,7 @@ interface ZoneInfo {
 }
 
 // ── Zone data ───────────────────────────────────────────────
-const ZONES: ZoneInfo[] = [
+const _ZONES: ZoneInfo[] = [
   {
     id: "residential",
     label: "Residential Zone",
@@ -1311,10 +1311,163 @@ function VideoSection() {
 }
 
 // ── Map ─────────────────────────────────────────────────────
+// ── Hotspot data ─────────────────────────────────────────────
+interface Hotspot {
+  id: string;
+  label: string;
+  icon: string;
+  left: string;
+  top: string;
+  color: string;
+  description: string;
+  details: string[];
+}
+
+const HOTSPOTS: Hotspot[] = [
+  {
+    id: "solar",
+    label: "Solar Power Plant",
+    icon: "☀️",
+    left: "8%",
+    top: "18%",
+    color: "oklch(0.75 0.22 88)",
+    description:
+      "Eco Sphere's solar power plant spans 12 acres with 2 large photovoltaic farms generating clean electricity for every home and building in the city.",
+    details: [
+      "2 solar panel farms",
+      "Powers 100% of the city",
+      "Zero carbon emissions",
+      "Smart grid integration",
+    ],
+  },
+  {
+    id: "park",
+    label: "Urban Park",
+    icon: "🌳",
+    left: "8%",
+    top: "52%",
+    color: "oklch(0.60 0.20 148)",
+    description:
+      "A lush 35-acre urban park at the heart of Eco Sphere, featuring walking trails, community gardens, natural wetlands, and 400+ native plant species.",
+    details: [
+      "35 acres of green space",
+      "400+ native species",
+      "Community gardens",
+      "Natural wetlands",
+    ],
+  },
+  {
+    id: "lake",
+    label: "City Lake",
+    icon: "💧",
+    left: "10%",
+    top: "70%",
+    color: "oklch(0.62 0.18 220)",
+    description:
+      "A natural freshwater lake that acts as Eco Sphere's water reservoir. It supports biodiversity, provides recreational activities, and feeds the city's clean water system.",
+    details: [
+      "Freshwater reservoir",
+      "Kayaking & recreation",
+      "Biodiversity habitat",
+      "Natural water filtration",
+    ],
+  },
+  {
+    id: "sports",
+    label: "Sports Area",
+    icon: "⚽",
+    left: "38%",
+    top: "74%",
+    color: "oklch(0.65 0.20 50)",
+    description:
+      "A world-class eco-friendly sports complex with solar-lit courts, natural grass fields, and zero-waste facilities promoting active and healthy community living.",
+    details: [
+      "Solar-powered lighting",
+      "Multi-sport courts",
+      "Natural grass fields",
+      "Zero-waste facilities",
+    ],
+  },
+  {
+    id: "clubhouse",
+    label: "Clubhouse",
+    icon: "🏛️",
+    left: "25%",
+    top: "52%",
+    color: "oklch(0.70 0.18 300)",
+    description:
+      "The community hub of Eco Sphere — home to co-working spaces, event halls, a rooftop café, and collaborative workshops for residents to gather and innovate.",
+    details: [
+      "Co-working spaces",
+      "Rooftop café",
+      "Event & workshop halls",
+      "Community programs",
+    ],
+  },
+  {
+    id: "hospital",
+    label: "Hospital",
+    icon: "🏥",
+    left: "72%",
+    top: "8%",
+    color: "oklch(0.65 0.18 15)",
+    description:
+      "A state-of-the-art green hospital powered entirely by renewables, featuring energy-efficient wards, a healing garden, and advanced telemedicine facilities.",
+    details: [
+      "100% renewable powered",
+      "Healing garden",
+      "Telemedicine hub",
+      "Net-zero design",
+    ],
+  },
+  {
+    id: "flats",
+    label: "Building Flats",
+    icon: "🏢",
+    left: "60%",
+    top: "40%",
+    color: "oklch(0.52 0.18 148)",
+    description:
+      "Twelve eco-designed apartment blocks (numbered 1–12) housing Eco Sphere's 2,000+ residents in energy-efficient, solar-powered, green-roofed living spaces.",
+    details: [
+      "12 apartment blocks",
+      "2,000+ residents",
+      "Solar-powered homes",
+      "Green rooftop gardens",
+    ],
+  },
+  {
+    id: "temples",
+    label: "Religious Zone",
+    icon: "🛕",
+    left: "68%",
+    top: "74%",
+    color: "oklch(0.60 0.18 260)",
+    description:
+      "A peaceful multi-faith religious zone featuring a Hindu Temple, Church, Mosque, and Buddhist Temple — all designed with eco-friendly architecture and meditation gardens.",
+    details: [
+      "Hindu Temple",
+      "Church",
+      "Mosque",
+      "Buddhist Temple",
+      "Meditation gardens",
+    ],
+  },
+];
+
 function MapSection() {
-  const [activeZone, setActiveZone] = useState<MapZone>(null);
-  const activeInfo = ZONES.find((z) => z.id === activeZone);
+  const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
+  const activeInfo = HOTSPOTS.find((h) => h.id === activeHotspot);
   const ref = useRevealOnScroll(0.1);
+
+  // Close modal on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveHotspot(null);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
 
   return (
     <section
@@ -1330,7 +1483,7 @@ function MapSection() {
         className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full opacity-10 blur-3xl pointer-events-none"
         style={{ background: "oklch(0.52 0.18 148)" }}
       />
-      <div className="max-w-7xl mx-auto relative" ref={ref}>
+      <div className="max-w-6xl mx-auto relative" ref={ref}>
         <div className="text-center mb-16 reveal">
           <span
             className="text-sm font-semibold uppercase tracking-widest"
@@ -1342,97 +1495,220 @@ function MapSection() {
             className="font-display font-bold mt-3 mb-5 text-white"
             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
-            Explore Our City
+            Explore Our City Map
           </h2>
           <p
             className="text-lg max-w-xl mx-auto"
             style={{ color: "oklch(0.65 0.05 200)" }}
           >
-            Click on any zone to learn about that part of Eco Sphere.
+            Click any glowing hotspot to discover what makes each zone special.
           </p>
         </div>
 
-        <div className="reveal grid grid-cols-2 gap-4 max-w-3xl mx-auto mb-10">
-          {ZONES.map((zone) => (
+        {/* Map container */}
+        <div
+          className="reveal relative mx-auto rounded-3xl overflow-hidden"
+          style={{
+            maxWidth: "870px",
+            boxShadow: "0 0 80px oklch(0.52 0.18 148 / 0.3)",
+          }}
+        >
+          {/* Map image */}
+          <img
+            src="/assets/uploads/Screenshot-2026-03-11-192321-1.png"
+            alt="Eco Sphere City Map"
+            className="w-full block"
+            style={{ display: "block" }}
+          />
+
+          {/* Hotspot overlays */}
+          {HOTSPOTS.map((spot) => (
             <button
+              key={spot.id}
               type="button"
-              key={zone.id}
-              className={`map-zone glass-card-dark rounded-3xl p-8 text-center flex flex-col items-center gap-4 ${activeZone === zone.id ? "active" : ""}`}
-              style={{
-                border: `2px solid ${activeZone === zone.id ? zone.color : "rgba(255,255,255,0.08)"}`,
-              }}
+              data-ocid={`map.${spot.id}.map_marker`}
               onClick={() =>
-                setActiveZone(
-                  activeZone === zone.id ? null : (zone.id as MapZone),
-                )
+                setActiveHotspot(activeHotspot === spot.id ? null : spot.id)
               }
-              data-ocid={`map.${zone.id}.map_marker`}
+              className="absolute flex flex-col items-center gap-1 group"
+              style={{
+                left: spot.left,
+                top: spot.top,
+                transform: "translate(-50%, -50%)",
+                zIndex: 10,
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+              title={spot.label}
             >
-              <span className="text-5xl">{zone.icon}</span>
+              {/* Pulsing dot */}
+              <span className="relative flex items-center justify-center">
+                <span
+                  className="absolute rounded-full animate-ping"
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    background: `${spot.color}`,
+                    opacity: 0.45,
+                  }}
+                />
+                <span
+                  className="relative rounded-full flex items-center justify-center text-sm font-bold transition-transform group-hover:scale-125"
+                  style={{
+                    width: "22px",
+                    height: "22px",
+                    background: spot.color,
+                    boxShadow: `0 0 14px ${spot.color}`,
+                  }}
+                >
+                  <span style={{ fontSize: "11px" }}>{spot.icon}</span>
+                </span>
+              </span>
+              {/* Label */}
               <span
-                className="font-display font-bold text-base sm:text-lg"
+                className="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity"
                 style={{
-                  color:
-                    activeZone === zone.id
-                      ? zone.color
-                      : "oklch(0.75 0.05 200)",
+                  background: "rgba(0,0,0,0.75)",
+                  color: spot.color,
+                  backdropFilter: "blur(6px)",
+                  border: `1px solid ${spot.color}60`,
+                  fontSize: "9px",
                 }}
               >
-                {zone.label}
+                {spot.label}
               </span>
             </button>
           ))}
         </div>
 
-        {activeInfo && (
+        {/* Legend */}
+        <div className="reveal mt-8 flex flex-wrap justify-center gap-3">
+          {HOTSPOTS.map((spot) => (
+            <button
+              key={spot.id}
+              type="button"
+              onClick={() =>
+                setActiveHotspot(activeHotspot === spot.id ? null : spot.id)
+              }
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all hover:scale-105"
+              style={{
+                background:
+                  activeHotspot === spot.id
+                    ? `${spot.color}30`
+                    : "rgba(255,255,255,0.05)",
+                border: `1px solid ${activeHotspot === spot.id ? spot.color : "rgba(255,255,255,0.12)"}`,
+                color:
+                  activeHotspot === spot.id
+                    ? spot.color
+                    : "oklch(0.70 0.05 200)",
+              }}
+              data-ocid={`map.${spot.id}.toggle`}
+            >
+              <span>{spot.icon}</span>
+              {spot.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Modal */}
+      {activeInfo && (
+        <div
+          className="fixed inset-0 flex items-center justify-center z-50 p-4"
+          style={{
+            background: "rgba(0,0,0,0.70)",
+            backdropFilter: "blur(8px)",
+          }}
+          onClick={() => setActiveHotspot(null)}
+          onKeyDown={(e) => e.key === "Escape" && setActiveHotspot(null)}
+          data-ocid="map.modal"
+        >
           <div
-            className="info-panel max-w-3xl mx-auto rounded-3xl overflow-hidden glass-card-dark"
+            className="relative rounded-3xl overflow-hidden max-w-lg w-full"
             style={{
+              background: "oklch(0.10 0.04 220)",
               border: `2px solid ${activeInfo.color}`,
-              boxShadow: `0 0 40px ${activeInfo.color}40`,
+              boxShadow: `0 0 60px ${activeInfo.color}40`,
+              maxHeight: "90vh",
+              overflowY: "auto",
             }}
-            data-ocid="map.panel"
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+            data-ocid="map.dialog"
           >
-            <img
-              src={activeInfo.image}
-              alt={activeInfo.label}
-              className="w-full h-52 object-cover"
+            {/* Header stripe */}
+            <div
+              className="h-2 w-full"
+              style={{ background: activeInfo.color }}
             />
             <div className="p-8">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-3xl">{activeInfo.icon}</span>
-                <h3
-                  className="font-display font-bold text-2xl"
-                  style={{ color: activeInfo.color }}
+              {/* Close button */}
+              <button
+                type="button"
+                className="absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center text-lg font-bold transition-all hover:scale-110"
+                style={{
+                  background: `${activeInfo.color}20`,
+                  color: activeInfo.color,
+                }}
+                onClick={() => setActiveHotspot(null)}
+                data-ocid="map.close_button"
+              >
+                ×
+              </button>
+
+              <div className="flex items-center gap-4 mb-5">
+                <span
+                  className="text-4xl w-16 h-16 flex items-center justify-center rounded-2xl"
+                  style={{
+                    background: `${activeInfo.color}20`,
+                    border: `1px solid ${activeInfo.color}40`,
+                  }}
                 >
-                  {activeInfo.label}
-                </h3>
+                  {activeInfo.icon}
+                </span>
+                <div>
+                  <h3
+                    className="font-display font-bold text-2xl"
+                    style={{ color: activeInfo.color }}
+                  >
+                    {activeInfo.label}
+                  </h3>
+                  <p
+                    className="text-xs uppercase tracking-widest mt-1"
+                    style={{ color: "oklch(0.55 0.05 200)" }}
+                  >
+                    Eco Sphere Zone
+                  </p>
+                </div>
               </div>
+
               <p
-                className="text-base leading-relaxed mb-6"
+                className="text-sm leading-relaxed mb-6"
                 style={{ color: "oklch(0.75 0.05 200)" }}
               >
                 {activeInfo.description}
               </p>
-              <div className="flex flex-wrap gap-3">
+
+              <div className="flex flex-wrap gap-2">
                 {activeInfo.details.map((d) => (
                   <span
                     key={d}
-                    className="text-sm px-4 py-2 rounded-full font-medium"
+                    className="text-xs px-3 py-1.5 rounded-full font-medium"
                     style={{
-                      background: `${activeInfo.color}20`,
+                      background: `${activeInfo.color}15`,
                       color: activeInfo.color,
-                      border: `1px solid ${activeInfo.color}50`,
+                      border: `1px solid ${activeInfo.color}40`,
                     }}
                   >
-                    \u2713 {d}
+                    ✓ {d}
                   </span>
                 ))}
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }
