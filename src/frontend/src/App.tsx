@@ -1539,6 +1539,7 @@ const CREATORS = [
   { name: "Ansh Charabharthy" },
   { name: "Aarna Agarwal" },
   { name: "Aadhya Maulin Bhaght" },
+  { name: "Jian Joshi" },
 ];
 
 function CreatorsSection() {
