@@ -20,7 +20,7 @@ const ZONES: ZoneInfo[] = [
     label: "Residential Zone",
     icon: "🏠",
     description:
-      "Home to 50,000 eco-conscious residents living in energy-efficient apartments and houses powered entirely by renewables.",
+      "Home to 2,000+ eco-conscious residents living in energy-efficient apartments and houses powered entirely by renewables.",
     details: [
       "Solar-powered homes",
       "Green rooftop gardens",
@@ -34,12 +34,8 @@ const ZONES: ZoneInfo[] = [
     label: "Energy Zone",
     icon: "⚡",
     description:
-      "The beating heart of Eco Sphere\u2019s power grid \u2014 5,000 solar panels and 200 wind turbines deliver 100% clean energy to the entire city.",
-    details: [
-      "5,000 solar panels",
-      "200 wind turbines",
-      "Hydrogen storage grid",
-    ],
+      "The beating heart of Eco Sphere\u2019s power grid \u2014 2 solar panel farms and 40 wind turbines deliver 100% clean energy to the entire city.",
+    details: ["2 solar farms", "40 wind turbines", "Hydrogen storage grid"],
     image: "/assets/generated/solar-energy.dim_800x600.jpg",
     color: "oklch(0.72 0.22 88)",
   },
@@ -48,10 +44,10 @@ const ZONES: ZoneInfo[] = [
     label: "Green Parks",
     icon: "🌳",
     description:
-      "12 urban parks spanning 800 hectares. Biodiversity zones, community gardens, and natural wetlands thrive at the city\u2019s core.",
+      "1 urban park spanning 35 acres. Biodiversity zones, community gardens, and natural wetlands thrive at the city\u2019s core.",
     details: [
-      "800 hectares of green space",
-      "32 biodiversity zones",
+      "35 acres of green space",
+      "Biodiversity zones",
       "400 native species",
     ],
     image: "/assets/generated/green-park.dim_800x600.jpg",
@@ -59,16 +55,16 @@ const ZONES: ZoneInfo[] = [
   },
   {
     id: "cultural",
-    label: "Cultural Area",
-    icon: "🎭",
+    label: "Temples",
+    icon: "🛕",
     description:
-      "A vibrant hub of art, music, and community gatherings. The Cultural Area celebrates creativity and sustainable design in equal measure.",
+      "A sacred district home to beautifully designed eco-friendly Hindu temples that blend spiritual heritage with sustainable architecture and natural surroundings.",
     details: [
-      "Open-air amphitheater",
-      "Eco-art galleries",
-      "Community innovation labs",
+      "Eco-friendly temples",
+      "Peaceful meditation gardens",
+      "Heritage architecture",
     ],
-    image: "/assets/generated/cultural-area.dim_800x600.jpg",
+    image: "/assets/generated/hindu-temple.dim_800x500.jpg",
     color: "oklch(0.55 0.18 260)",
   },
 ];
@@ -122,6 +118,7 @@ function Navbar() {
     { label: "Apartments", id: "apartments" },
     { label: "Energy", id: "energy" },
     { label: "Parks", id: "parks" },
+    { label: "Video", id: "video" },
     { label: "Map", id: "map" },
   ];
 
@@ -324,7 +321,7 @@ const FEATURES = [
     id: "community",
     icon: "🤝",
     title: "Community Wellbeing",
-    desc: "Shared spaces, community gardens, cultural hubs, and free public transport unite 50,000 residents in a thriving ecosystem.",
+    desc: "Shared spaces, community gardens, cultural hubs, and free public transport unite 2,000+ residents in a thriving ecosystem.",
   },
 ];
 
@@ -535,7 +532,7 @@ function useCounterAnimation(target: number, suffix: string, inView: boolean) {
 }
 
 const ENERGY_STATS = [
-  { id: "solar", icon: "☀️", label: "Solar Panels" },
+  { id: "solar", icon: "☀️", label: "Solar Farms" },
   { id: "wind", icon: "💨", label: "Wind Turbines" },
   { id: "clean", icon: "⚡", label: "Clean Energy" },
 ];
@@ -558,8 +555,8 @@ function EnergySection() {
     return () => observer.disconnect();
   }, [ref]);
 
-  const c1 = useCounterAnimation(5000, "", inView);
-  const c2 = useCounterAnimation(200, "", inView);
+  const c1 = useCounterAnimation(2, "", inView);
+  const c2 = useCounterAnimation(40, "", inView);
   const statValues = [c1, c2, inView ? "100%" : "0%"];
 
   return (
@@ -590,7 +587,7 @@ function EnergySection() {
                 style={{ color: "oklch(0.40 0.05 200)" }}
               >
                 Eco Sphere runs entirely on clean energy. Our massive solar
-                arrays capture the sun\u2019s power while 200 wind turbines
+                arrays capture the sun\u2019s power while 40 wind turbines
                 harness coastal breezes. Together they power every home,
                 vehicle, and business \u2014 with surplus stored for a rainy
                 day.
@@ -643,7 +640,7 @@ function EnergySection() {
 
 // ── Parks ───────────────────────────────────────────────────
 const PARK_BADGES = [
-  { id: "parks", text: "🌳 12 Urban Parks" },
+  { id: "parks", text: "🌳 1 Urban Park" },
   { id: "bio", text: "🦋 Biodiversity Zones" },
   { id: "gardens", text: "🌱 Community Gardens" },
 ];
@@ -697,10 +694,10 @@ function ParksSection() {
                 style={{ color: "oklch(0.80 0.08 165)" }}
               >
                 Nature is not an afterthought in Eco Sphere \u2014 it\u2019s the
-                foundation. Twelve urban parks weave through the city like a
-                living network, connecting residents to biodiversity zones,
-                community gardens, and tranquil wetlands. Here, every child
-                grows up with a tree to climb and a garden to tend.
+                foundation. One urban park weaves through the city like a living
+                network, connecting residents to biodiversity zones, community
+                gardens, and tranquil wetlands. Here, every child grows up with
+                a tree to climb and a garden to tend.
               </p>
             </div>
 
@@ -720,6 +717,72 @@ function ParksSection() {
                 </span>
               ))}
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Video ───────────────────────────────────────────────────
+function VideoSection() {
+  const ref = useRevealOnScroll(0.1);
+
+  return (
+    <section
+      id="video"
+      data-ocid="video.section"
+      className="py-24 px-4"
+      style={{ background: "oklch(0.97 0.01 148)" }}
+    >
+      <div className="max-w-5xl mx-auto" ref={ref}>
+        <div className="text-center mb-12 reveal">
+          <span
+            className="text-sm font-semibold uppercase tracking-widest"
+            style={{ color: "oklch(0.52 0.18 148)" }}
+          >
+            Our Story
+          </span>
+          <h2
+            className="font-display font-bold text-4xl sm:text-5xl mt-3 mb-5"
+            style={{ color: "oklch(0.12 0.04 200)" }}
+          >
+            Eco Sphere in Action
+          </h2>
+          <p
+            className="text-lg max-w-2xl mx-auto"
+            style={{ color: "oklch(0.40 0.05 200)" }}
+          >
+            Watch how Eco Sphere brings together sustainability, community, and
+            innovation in one thriving smart city.
+          </p>
+        </div>
+
+        <div
+          className="reveal rounded-3xl overflow-hidden shadow-2xl"
+          style={{
+            border: "1px solid oklch(0.88 0.03 148)",
+            background: "oklch(0.10 0.04 200)",
+          }}
+          data-ocid="video.canvas_target"
+        >
+          <div
+            style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}
+          >
+            <iframe
+              src="https://www.canva.com/design/DAHDJ-sEPC8/view?embed"
+              title="Eco Sphere Video"
+              allow="fullscreen"
+              allowFullScreen
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                border: "none",
+              }}
+            />
           </div>
         </div>
       </div>
@@ -912,6 +975,7 @@ export default function App() {
         <ApartmentsSection />
         <EnergySection />
         <ParksSection />
+        <VideoSection />
         <MapSection />
       </main>
       <Footer />
