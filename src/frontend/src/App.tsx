@@ -770,9 +770,9 @@ function VideoSection() {
             style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}
           >
             <iframe
-              src="https://www.canva.com/design/DAHDJ-sEPC8/view?embed"
+              src="https://drive.google.com/file/d/1BDAPb4WvaWgvwEmVdtrRtCboc07tGHJI/preview"
               title="Eco Sphere Video"
-              allow="fullscreen"
+              allow="autoplay; fullscreen"
               allowFullScreen
               style={{
                 position: "absolute",
